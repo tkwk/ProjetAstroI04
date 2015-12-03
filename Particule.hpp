@@ -9,6 +9,7 @@ class Particule {
 		real m;		// Mass of the paticule
 		Vector<DIM> r;	// Position of the particule
 		Vector<DIM> v;	// Velocity of the particule
+		Vector<DIM> f;	// Force felt by the particle
 	public:
 		Particule();
 		Particule(const real & mass);
