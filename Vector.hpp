@@ -170,7 +170,7 @@ Vector<N> & Vector<N>::normalize() {
 
 
 template<unsigned int N>
-std::ostream & std::operator<<(std::ostream & o, const Vector<N> &v) {
+std::ostream & operator<<(std::ostream & o, const Vector<N> &v) {
     o << "(";
     for(int i=0;i<N-1;i++)
         o << v[i] << ", ";
