@@ -31,9 +31,6 @@ public:
 
     friend Vector<N> operator*<>(const real &, const Vector<N> &);
     
-    friend Vector<3> operator*(const Vector<3> &, const Vector<3> &);
-    friend Vector<3> operator*(const Vector<2> &, const Vector<2> &);
-
     real dotProduct(const Vector<N> &) const;
     real squaredNorm() const;
     real norm() const;
@@ -114,24 +111,6 @@ Vector<N> operator*(const real &s, const Vector<N> &v) {
     Vector<N> res;
     for(int i=0;i<N;i++)
         res[i] = s*v[i];
-    return res;
-}
-
-
-Vector<3> operator*(const Vector<3> one, const Vector<3> two) {
-    Vector<3> res;
-    res[0] = one[1]*two[2]-one[2]*two[1];
-    res[1] = one[2]*two[0]-one[0]*two[2];
-    res[2] = one[0]*two[1]-one[1]*two[0];
-    return res;
-}
-
-
-Vector<3> operator*(const Vector<2> one, const Vector<2> two) {
-    Vector<3> res;
-    res[0] = 0.0;
-    res[1] = 0.0;
-    res[2] = one[0]*two[1]-one[1]*two[0];
     return res;
 }
 
