@@ -11,6 +11,8 @@ class Universe {
 	public :
 		Universe();
 		void gForce(Particule *) const;
+		double potentialEnergy(const Particule *) const;
+		double totalEnergy(const Particule *) const;
 };
 
 #endif
