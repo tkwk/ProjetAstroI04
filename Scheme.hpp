@@ -1,13 +1,16 @@
 #ifndef __SCHEME_HPP__
 #define __SCHEME_HPP__
 
-#include "Particule.hpp"
+class Particule;
 
 class Scheme {
 	private:
-		timeStep dt;
+		double dt;
 	public:
-		virtual void timeStep(const Particule &) = 0;
+		virtual void timeStep(Particule *) = 0;
+		
+		friend class Euler;
+		friend class Leapfrog;
 };
 
 #endif
