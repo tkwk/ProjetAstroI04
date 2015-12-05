@@ -4,5 +4,14 @@
 const int DIM = 2;
 const int N_PARTICULES = 10;
 
+class Particule;
+
+
+class Universe {
+	public :
+		Universe();
+		void gForce(Particule *) const;
+};
+
 #endif
 
