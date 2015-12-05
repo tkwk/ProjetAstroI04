@@ -3,6 +3,7 @@
 
 #include "Vector.hpp"
 #include "Universe.hpp"
+#include "Scheme.hpp"
 
 class Particule {
 	private:
@@ -16,6 +17,8 @@ class Particule {
 		~Particule();
 		
 		real kineticEnergy();
+
+		friend class Euler;
 };
 
 #endif
