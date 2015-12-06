@@ -4,7 +4,7 @@
 #include <cmath>
 #include "Universe.hpp"
 
-static const Universe universe;
+static Universe universe;
 
 #endif
 
