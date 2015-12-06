@@ -10,9 +10,9 @@ class Particule;
 class Universe {
 	public :
 		Universe();
-		void gForce(Particule *) const;
-		double potentialEnergy(const Particule *) const;
-		double totalEnergy(const Particule *) const;
+		void gForce(Particule *);
+		double potentialEnergy(const Particule *);
+		double totalEnergy(const Particule *);
 };
 
 #endif

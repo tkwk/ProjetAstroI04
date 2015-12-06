@@ -2,6 +2,6 @@
 
 Universe::Universe() {}
 
-void Universe::gForce(Particule *p) const {
+void Universe::gForce(Particule *p) {
 
 }
