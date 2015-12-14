@@ -1,7 +1,4 @@
 #include "Euler.hpp"
-#include "Universe.hpp"
-#include "Particule.hpp"
-#include "astro.hpp"
 
 void Euler::timeStep(Particule & p) const {
 	double dt = this->dt;
