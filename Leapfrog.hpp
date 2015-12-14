@@ -6,7 +6,8 @@ class Particule;
 
 class Leapfrog : public Scheme {
 	public:
-		void timeStep(Particule *);
+		void timeStep(Particule &);
+		void universeStep(Universe & u);
 };
 
 #endif

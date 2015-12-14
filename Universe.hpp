@@ -1,6 +1,9 @@
 #ifndef __UNIVERSE_HPP__
 #define __UNIVERSE_HPP__
 
+#define SCHEME_EULER 		0
+#define SCHEME_LEAPFROG 	1
+
 #include <vector>
 #include "Particule.hpp"
 
@@ -12,7 +15,6 @@ class Universe {
 	private :
 		vector<Particule> Particules;
 	public :
-		Universe();
         Universe(const vector<Particule> &);
         Universe(const string &);
 
@@ -26,6 +28,7 @@ class Universe {
         const vector<Particule> & particules() const;
 
         friend class Scheme;
+	friend class Leapfrog;
 };
 
 #endif

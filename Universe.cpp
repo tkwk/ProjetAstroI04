@@ -4,12 +4,11 @@
 #include <sstream>
 
 
-Universe::Universe() {}
-
-Universe::Universe(const vector<Particule> &parts) : Particules(parts) {}
+Universe::Universe(const vector<Particule> &parts) : Particules(parts) {gForces();}
 
 Universe::Universe(const string & filename) : Particules() {
     this->readFromFile(filename);
+    gForces();
 }
 
 void Universe::readFromFile(const string & filename) {
@@ -33,17 +32,26 @@ void Universe::readFromFile(const string & filename) {
 void Universe::gForce(Particule & p, int options) {
 	int Np = Particules.size();
 
-		p.f = Vector<DIM>(); 
-	
+	if (options == SCHEME_EULER) {
+		p.f = Vector<DIM>(); 	
 		for (int id=0; id<Np; id++) {
 			if (p.id() != Particules[id].id()) 
                 	p.f = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();	
 		}
+	}
+	else if (options == SCHEME_LEAPFROG) {
+		p.fnext = Vector<DIM>();
+		for (int id=0; id<Np; id++) {
+			if (p.id() != Particules[id].id())
+				p.fnext = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();
+		}
+	}
+
 }
 
 void Universe::gForces(int options) {
     for(int i=0; i<Particules.size(); i++)
-        gForce(Particules[i]);
+        gForce(Particules[i], options);
 }
 
 
