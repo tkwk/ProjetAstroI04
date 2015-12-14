@@ -18,6 +18,9 @@ class Universe {
         void gForces();
 		double potentialEnergy(const Particule &) const;
 		double totalEnergy(const Particule &) const;
+        const vector<Particule> & particules() const;
+
+        friend class Scheme;
 };
 
 #endif

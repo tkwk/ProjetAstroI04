@@ -4,6 +4,7 @@
 
 Universe::Universe() {}
 
+Universe::Universe(const vector<Particule> &parts) : Particules(parts) {}
 
 void Universe::gForce(Particule & p) {
 	int Np = Particules.size();
@@ -20,6 +21,11 @@ void Universe::gForce(Particule & p) {
 	}	
 }
 
+void Universe::gForces() {
+    for(int i=0; i<Particules.size(); i++)
+        gForce(Particules[i]);
+}
+
 
 double Universe::potentialEnergy(const Particule &) const {
 	return 0.0;
@@ -29,3 +35,6 @@ double Universe::potentialEnergy(const Particule &) const {
 double Universe::totalEnergy(const Particule &) const {
 	return 0.0;
 }
+
+const vector<Particule> & Universe::particules() const {return Particules;}
+

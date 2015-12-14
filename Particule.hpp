@@ -12,11 +12,7 @@ class Particule {
 
         void genId();
 	public:
-		Particule();
-		Particule(const real &);
-        Particule(const real &, const Vector<DIM> &);
-        Particule(const real &, const Vector<DIM> &, const Vector<DIM> &);
-		~Particule();
+        Particule(const real &mass = 0.0, const Vector<DIM> &pos = Vector<DIM>(), const Vector<DIM> &spd = Vector<DIM>());
 		
 		real kineticEnergy();
 

@@ -132,7 +132,7 @@ real Vector<N>::squaredNorm() const {
 
 template<unsigned int N>
 real Vector<N>::norm() const {
-    return sqrt(this->squardNorm());
+    return sqrt(this->squaredNorm());
 }
 
 
