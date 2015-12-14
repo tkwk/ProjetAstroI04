@@ -32,12 +32,11 @@ void Universe::readFromFile(const string & filename) {
 
 void Universe::gForce(Particule & p, int options) {
 	int Np = Particules.size();
-	int idp = p.id();
 
 		p.f = Vector<DIM>(); 
 	
 		for (int id=0; id<Np; id++) {
-			if (idp != id) 
+			if (p.id() != Particules[id].id()) 
                 	p.f = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();	
 		}
 }
