@@ -14,10 +14,15 @@ class Universe {
 	public :
 		Universe();
         Universe(const vector<Particule> &);
-		void gForce(Particule &);
-        void gForces();
+        Universe(const string &);
+
+        void readFromFile(const string &);
+
+		void gForce(Particule &, int options = 0);
+        void gForces(int options = 0);
 		real potentialEnergy(const Particule &) const;
 		real systemEnergy() const;
+
         const vector<Particule> & particules() const;
 
         friend class Scheme;

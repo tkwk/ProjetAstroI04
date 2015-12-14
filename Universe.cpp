@@ -1,12 +1,36 @@
 #include "Universe.hpp"
 #include <cmath>
+#include <fstream>
+#include <sstream>
 
 
 Universe::Universe() {}
 
 Universe::Universe(const vector<Particule> &parts) : Particules(parts) {}
 
-void Universe::gForce(Particule & p) {
+Universe::Universe(const string & filename) : Particules() {
+    this->readFromFile(filename);
+}
+
+void Universe::readFromFile(const string & filename) {
+    ifstream file(filename.c_str());
+    string line;
+    Particules.resize(0);
+    while(getline(file,line)) {
+        stringstream ss(line);
+        real m, x, y, vx, vy;
+        ss >> m >> x >> y >> vx >> vy;
+        Vector<DIM> pos, spd;
+        pos[0] = x;
+        pos[1] = y;
+        spd[0] = vx;
+        spd[1] = vy;
+        Particules.push_back(Particule(m,pos,spd));
+    }
+    file.close();
+}
+
+void Universe::gForce(Particule & p, int options) {
 	int Np = Particules.size();
 	int idp = p.id();
 
@@ -18,7 +42,7 @@ void Universe::gForce(Particule & p) {
 		}
 }
 
-void Universe::gForces() {
+void Universe::gForces(int options) {
     for(int i=0; i<Particules.size(); i++)
         gForce(Particules[i]);
 }
