@@ -6,7 +6,7 @@ int Particule::nid_ = 0;
 Particule::Particule(const real & mass, const Vector<DIM> &pos, const Vector<DIM> &spd) : m(mass), r(pos), v(spd) {genId();}
 
 // Kinetic and Potential energy are calculated here :
-real Particule::kineticEnergy() {
+real Particule::kineticEnergy() const {
 	return 0.5*(this->m)*(this->v.squaredNorm());
 }
 
