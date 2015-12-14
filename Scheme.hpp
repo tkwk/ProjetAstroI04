@@ -5,10 +5,10 @@
 
 class Scheme {
 	protected:
-		double dt;
 	public:
+		double dt;
 		virtual void timeStep(Particule &) const = 0;
-        void universeStep(Universe & u) {
+        virtual void universeStep(Universe & u) {
             u.gForces();
             for(int i=0; i<u.Particules.size(); i++)
                 timeStep((u.Particules)[i]);
