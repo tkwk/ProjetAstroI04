@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "Particule.hpp"
-#include "Euler.hpp"
 
 using namespace std;
 

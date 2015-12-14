@@ -1,16 +1,13 @@
 #ifndef __SCHEME_HPP__
 #define __SCHEME_HPP__
 
-class Particule;
+#include "Universe.hpp"
 
 class Scheme {
-	private:
+	protected:
 		double dt;
 	public:
 		virtual void timeStep(Particule *) = 0;
-		
-		friend class Euler;
-		friend class Leapfrog;
 };
 
 #endif
