@@ -2,24 +2,23 @@
 #define __UNIVERSE_HPP__
 
 #include <vector>
+#include "Particule.hpp"
+#include "Euler.hpp"
+
 using namespace std;
-
-
-const int DIM = 2;
-const int N_PARTICULES = 10;
 
 class Particule;
 
-
 class Universe {
 	private :
-		int N_particules;
-		vector<Particule *> Particules;
+		vector<Particule> Particules;
 	public :
 		Universe();
-		void gForce(Particule *);
-		double potentialEnergy(const Particule *);
-		double totalEnergy(const Particule *);
+        Universe(const vector<Particule> &);
+		void gForce(Particule &);
+        void gForces();
+		double potentialEnergy(const Particule &) const;
+		double totalEnergy(const Particule &) const;
 };
 
 #endif
