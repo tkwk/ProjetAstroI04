@@ -6,7 +6,7 @@ class Particule;
 
 class Euler : public Scheme {
 	public:
-		void timeStep(Particule *);
+		void timeStep(Particule &) const;
 };
 
 #endif
