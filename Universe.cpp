@@ -13,9 +13,8 @@ void Universe::gForce(Particule & p) {
 		p.f = Vector<DIM>(); 
 	
 		for (int id=0; id<Np; id++) {
-			if (idp != id) {
-                p.f = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();
-			}
+			if (idp != id) 
+                	p.f = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();	
 		}
 }
 
@@ -25,13 +24,31 @@ void Universe::gForces() {
 }
 
 
-double Universe::potentialEnergy(const Particule &) const {
-	return 0.0;
+real Universe::potentialEnergy(const Particule & p) const {
+	real res;
+	int Np = Particules.size();
+	int idp = p.id();
+
+	res = 0.0;
+	for (int id=0; id<Np; id++) {
+		if (idp != id)
+			res += -(p.m * Particules[id].m)/(Particules[id].r - p.r).squaredNorm();
+	}
+	
+	return res;
 }
 
 
-double Universe::totalEnergy(const Particule &) const {
-	return 0.0;
+real Universe::systemEnergy() const {
+	real res;
+	int Np = Particules.size();
+
+	res = 0.0;
+	for (int id=0; id<Np; id++) {
+		res += this->Particules[id].kineticEnergy() + this->potentialEnergy(Particules[id]);
+	}
+
+	return res;
 }
 
 const vector<Particule> & Universe::particules() const {return Particules;}
