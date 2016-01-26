@@ -27,7 +27,7 @@ Parser::Parser(char ** args, const std::vector<std::string> &list,
         optional_[i] = optional[i];
     for(int i=0;i<isPresent_.size();i++)
         isPresent_[i] = false;
-    update();    
+    check_ = update();    
 }
 
 bool Parser::isPresent(const std::string &option) {

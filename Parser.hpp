@@ -15,7 +15,9 @@ class Parser {
         std::string help();
         std::vector<std::string> & operator[] (const std::string &);
         bool isPresent(const std::string &);
+        bool check() {return check_;}
     protected:
+        bool check_;
         bool update();
         
         bool allowFiles_;
