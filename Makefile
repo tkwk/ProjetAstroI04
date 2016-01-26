@@ -1,29 +1,32 @@
 NAME=projetAstro
+VTKPATHL=/usr/lib/vtk-5.8/
+VTKPATHI=/usr/include/vtk-5.8/
+OPTIONS=-std=c++11 -I${VTKPATHI} -L${VTKPATHL} -Wno-deprecated
 
 all: ${NAME}_clean
 
 ${NAME}_clean: ${NAME} clean
 
 ${NAME}: main.o
-	g++ *.o -o ${NAME} -std=c++11
+	g++ *.o -o ${NAME} ${OPTIONS}
 
 main.o: main.cpp Euler.o Leapfrog.o Parser.o
-	g++ -c main.cpp -std=c++11
+	g++ -c main.cpp ${OPTIONS}
 
 Parser.o:
-	g++ -c Parser.cpp -std=c++11
+	g++ -c Parser.cpp ${OPTIONS}
 
 Universe.o: Universe.cpp Particule.o
-	g++ -c Universe.cpp -std=c++11
+	g++ -c Universe.cpp ${OPTIONS}
 
 Particule.o: Particule.cpp
-	g++ -c Particule.cpp -std=c++11
+	g++ -c Particule.cpp ${OPTIONS}
 
 Euler.o: Euler.cpp Universe.o
-	g++ -c Euler.cpp -std=c++11
+	g++ -c Euler.cpp ${OPTIONS}
 
 Leapfrog.o: Leapfrog.cpp Universe.o
-	g++ -c Leapfrog.cpp -std=c++11
+	g++ -c Leapfrog.cpp ${OPTIONS}
 
 clean:
 	rm -rf *.o
