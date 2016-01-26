@@ -5,7 +5,7 @@ all: ${NAME}_clean
 ${NAME}_clean: ${NAME} clean
 
 ${NAME}: main.o
-	g++ main.o -o ${NAME} -std=c++11
+	g++ *.o -o ${NAME} -std=c++11
 
 main.o: main.cpp Euler.o Leapfrog.o
 	g++ -c main.cpp -std=c++11
