@@ -1,7 +1,8 @@
 NAME=projetAstro
 VTKPATHL=/usr/lib/vtk-5.8/
 VTKPATHI=/usr/include/vtk-5.8/
-OPTIONS=-std=c++11 -I${VTKPATHI} -L${VTKPATHL} -Wno-deprecated
+VTKOPTIONS=-lvtkCommon -lvtkFiltering -lvtkImaging -lvtkGraphics -lvtkGenericFiltering -lvtkIO -lvtkRendering -lvtkVolumeRendering -lvtkHybrid -lvtkWidgets -lvtkInfovis -lvtkGeovis -lvtkViews -lvtkCharts
+OPTIONS=-std=c++11 -I${VTKPATHI} -L${VTKPATHL} ${VTKOPTIONS} -Wno-deprecated
 
 all: ${NAME}_clean
 
