@@ -7,8 +7,11 @@ ${NAME}_clean: ${NAME} clean
 ${NAME}: main.o
 	g++ *.o -o ${NAME} -std=c++11
 
-main.o: main.cpp Euler.o Leapfrog.o
+main.o: main.cpp Euler.o Leapfrog.o Parser.o
 	g++ -c main.cpp -std=c++11
+
+Parser.o:
+	g++ -c Parser.cpp -std=c++11
 
 Universe.o: Universe.cpp Particule.o
 	g++ -c Universe.cpp -std=c++11
