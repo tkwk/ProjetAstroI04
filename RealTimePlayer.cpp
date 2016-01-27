@@ -1,6 +1,9 @@
 
 #include "RealTimePlayer.hpp"
 
+
+vtkStandardNewMacro(CustomInteractor);
+
 //implementation de vtkTimerCallback
 
 void vtkTimerCallback::Execute(vtkObject *vtkNotUsed(caller), unsigned long eventId,
