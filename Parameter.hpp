@@ -8,8 +8,10 @@
 struct Parameter {
     Parameter(const std::string &);
     void readFromFile(const std::string &);
+
     double dt;
     double T;
+    std::string scheme;
 };
 
 Parameter::Parameter(const std::string &filename) {
@@ -28,9 +30,13 @@ void Parameter::readFromFile(const std::string & filename) {
             stringstream sss(right);
             sss >> dt;
         }
-        if(left=="T") {
+        else if(left=="T") {
             stringstream sss(right);
             sss >> T;
+        }
+        else if(left=="scheme") {
+            stringstream sss(right);
+            sss >> scheme;
         }
    }
 
