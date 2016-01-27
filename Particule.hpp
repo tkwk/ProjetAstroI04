@@ -3,7 +3,7 @@
 
 #include "Vector.hpp"
 
-const int DIM=2;
+const int DIM=3;
 
 class Particule {
     private:
