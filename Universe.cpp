@@ -17,13 +17,15 @@ void Universe::readFromFile(const string & filename) {
     Particules.resize(0);
     while(getline(file,line)) {
         stringstream ss(line);
-        real m, x, y, vx, vy;
-        ss >> m >> x >> y >> vx >> vy;
+        real m, x, y, z, vx, vy, vz;
+        ss >> m >> x >> y >> z >> vx >> vy >> vz;
         Vector<DIM> pos, spd;
         pos[0] = x;
         pos[1] = y;
+        pos[2] = z;
         spd[0] = vx;
         spd[1] = vy;
+        pos[2] = vz;
         Particules.push_back(Particule(m,pos,spd));
     }
     file.close();
@@ -36,14 +38,14 @@ void Universe::gForce(Particule & p, int options) {
 		p.f = Vector<DIM>(); 	
 		for (int id=0; id<Np; id++) {
 			if (p.id() != Particules[id].id()) 
-                	p.f = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();	
+                	p.f = p.f + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();	
 		}
 	}
 	else if (options == SCHEME_LEAPFROG) {
 		p.fnext = Vector<DIM>();
 		for (int id=0; id<Np; id++) {
 			if (p.id() != Particules[id].id())
-				p.fnext = (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();
+				p.fnext = p.fnext + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();
 		}
 	}
 
