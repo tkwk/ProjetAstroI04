@@ -30,6 +30,14 @@ struct Parameter {
                 stringstream sss(right);
                 sss >> scheme;
             }
+						else if(left=="init") {
+								stringstream sss(right);
+								sss >> init;
+						}
+						else if(left=="Np") {
+								stringstream sss(right);
+								sss >> Np;
+						}
         }
         
         file.close();
@@ -37,6 +45,8 @@ struct Parameter {
     double dt;
     double T;
     std::string scheme;
+		std::string init;
+		int Np;
 };
 
 #endif
