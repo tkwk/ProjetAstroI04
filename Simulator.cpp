@@ -1,6 +1,17 @@
 
 #include "Simulator.hpp"
 
+bool Simulator::interrupted = false;
+
+void Simulator::intHandler(int no) {
+    if(Simulator::interrupted) exit(0);
+    Simulator::interrupted = true;
+}
+
+void Simulator::handleInterruptions() {
+    signal(SIGINT,Simulator::intHandler);
+}
+
 Simulator::Simulator(const std::string &input, const std::string &params,
         const std::string &out, const std::string &outMovie, bool rt) {
     parameters = new Parameter(params);
@@ -20,8 +31,6 @@ Simulator::Simulator(const std::string &input, const std::string &params,
     output = out;
     outputMovie = outMovie;
     realTime = rt;
-
-    this->start();
 }
 
 Simulator::~Simulator() {
@@ -73,18 +82,24 @@ void Simulator::start() {
                 (*mfile) << std::endl;
             }
             //ecrire dans la memoire partagee si necessaire
-            if(pid != -1 && ((nbit%1000)==0)) {
+            if(pid != -1 && ((it%1000)==0)) {
                 for(int i=0;i<nbParticules;i++)
                     for(int j=0;j<3;j++)
                         shm[3*i+j] = universe->particules()[i].r[j];
             }
+            if((it%1000)==0 && Simulator::interrupted)
+                break;
             it++;
             time+=parameters->dt;
             //iteration du schema
             scheme->universeStep(*universe);
         }
 
-        std::cout << "Computation finished" << std::endl;
+        if(Simulator::interrupted) {
+            std::cout << "Computation interrupted" << std::endl;
+        }
+        else
+            std::cout << "Computation finished" << std::endl;
         
         if(movie) {
             mfile->close();
@@ -95,7 +110,7 @@ void Simulator::start() {
         std::cout << "Output file written to " << output << std::endl;
 
         if(pid != -1) {
-            cout << "Waiting for graphical interface to be closed..." << endl;
+            cout << "Waiting for graphical interface to be closed (press 'q' in the graphical window) ..." << endl;
             wait(NULL);
             cout << "Done" << endl;
             shmdt(shm);

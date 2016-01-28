@@ -20,6 +20,10 @@ class Simulator {
         Simulator(const std::string &input, const std::string &params, const std::string &out, const std::string &outMovie, bool realTime);
         ~Simulator();
         void start();
+        
+        static void handleInterruptions();
+        static bool interrupted;
+        static void intHandler(int);
     private:
         Parameter * parameters;
         Universe * universe;
