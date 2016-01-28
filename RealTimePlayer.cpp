@@ -26,6 +26,9 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb) : shm(shmem), nbParticule
         spheres[i] = vtkSphereSource::New();
         spheres[i]->SetCenter(0.0, 0.0, 0.0 );
         spheres[i]->SetRadius(0.1);
+				// Spheres appear smoother
+				spheres[i]->SetPhiResolution(18);
+				spheres[i]->SetThetaResolution(36);
     }
     vtkPolyDataMapper ** mappers = new vtkPolyDataMapper*[nbParticules];
     for(int i=0;i<nbParticules;i++) {
@@ -42,8 +45,10 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb) : shm(shmem), nbParticule
     CustomInteractor * camera = CustomInteractor::New();
     camera->window=window;
 
-    vtkRenderWindowInteractor * interactor = vtkRenderWindowInteractor::New();
-    interactor->SetRenderWindow(window);
+		window->SetSize(720, 720); // Set window size in  pixels   
+
+    vtkRenderWindowInteractor * interactor = vtkRenderWindowInteractor::New();	
+		interactor->SetRenderWindow(window);
     interactor->SetInteractorStyle(camera);
     interactor->Initialize();
     vtkTimerCallback * cb = vtkTimerCallback::New();
@@ -55,7 +60,6 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb) : shm(shmem), nbParticule
     interactor->CreateRepeatingTimer(30);
 
     window->AddRenderer(renderer);
-    
     
     //on lance la lecture
     interactor->Start();
