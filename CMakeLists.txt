@@ -14,7 +14,8 @@ add_executable(projetAstro
     Particule.cpp
     RealTimePlayer.cpp
     Universe.cpp
-    Initialize.cpp)
+    Initialize.cpp
+    Simulator.cpp)
 
 target_link_libraries(projetAstro
     ${VTK_LIBRARIES})
