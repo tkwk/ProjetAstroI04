@@ -21,7 +21,7 @@ std::vector<int> size() {
 std::vector<bool> optional() {
     std::vector<bool> optional_;
     optional_.push_back(true);
-    optional_.push_back(false);
+    optional_.push_back(true);
     optional_.push_back(false);
     return optional_;
 }
