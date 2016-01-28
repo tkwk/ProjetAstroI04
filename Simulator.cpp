@@ -1,5 +1,6 @@
 
 #include "Simulator.hpp"
+#include "Initialize.hpp"
 
 bool Simulator::interrupted = false;
 
@@ -14,12 +15,19 @@ void Simulator::handleInterruptions() {
 
 Simulator::Simulator(const std::string &input, const std::string &params,
         const std::string &out, const std::string &outMovie, bool rt) {
-    refreshFreq = 1000;
-    movieNbPoints = 10000;
     parameters = new Parameter(params);
-    universe = new Universe(input);
     this->input = input;
-    if(parameters->scheme == "Euler")
+		if (parameters->init == "file") 
+				universe = new Universe(input);
+		else if (parameters->init == "random") {
+				double *bounds = (double*)malloc(6*sizeof(double));
+				for (int i=0; i<3; i++) {
+						bounds[2*i] = -10.0;
+						bounds[2*i+1] = 10.0;
+				}
+				universe = new Universe(initRandom(parameters->Np, parameters->m, bounds));
+		}
+		if(parameters->scheme == "Euler")
         scheme = new Euler;
     else if(parameters->scheme == "Leapfrog")
         scheme = new Leapfrog;
@@ -34,6 +42,8 @@ Simulator::Simulator(const std::string &input, const std::string &params,
     output = out;
     outputMovie = outMovie;
     realTime = rt;
+    refreshFreq = 1000/(universe->particules().size());
+    movieNbPoints = 10000;
 }
 
 Simulator::~Simulator() {
@@ -78,7 +88,7 @@ void Simulator::start() {
         //verbose
         cout << "Initial confitions file: " << input << std::endl;
         cout << "Number of particules: " << nbParticules << std::endl;
-        cout << "Scheme: " << parameters->scheme;
+        cout << "Scheme: " << parameters->scheme << endl;
         cout << "Time:   " << "dt=" << parameters->dt << "   Tmax=" << parameters->T << std::endl;
         cout << std::endl;
         cout << "Starting computation" << std::endl << std::endl;
@@ -116,6 +126,7 @@ void Simulator::start() {
             }
             it++;
             time+=parameters->dt;
+
             //iteration du schema
             scheme->universeStep(*universe);
         }
@@ -145,13 +156,4 @@ void Simulator::start() {
     }
 
 }
-
-
-
-
-
-
-
-
-
 

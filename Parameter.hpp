@@ -38,6 +38,10 @@ struct Parameter {
 								stringstream sss(right);
 								sss >> Np;
 						}
+						else if(left=="m") {
+								stringstream sss(right);
+								sss >> m;
+						}
         }
         
         file.close();
@@ -47,6 +51,7 @@ struct Parameter {
     std::string scheme;
 		std::string init;
 		int Np;
+		double m;
 };
 
 #endif
