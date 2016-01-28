@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(projetAstro)
 
+#SET( CMAKE_CXX_FLAGS "-pg" )
+
 find_package(VTK)
 include_directories(".")
 include(${VTK_USE_FILE})
@@ -14,8 +16,9 @@ add_executable(projetAstro
     Particule.cpp
     RealTimePlayer.cpp
     Universe.cpp
-    Initialize.cpp
     Simulator.cpp)
+
+SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS}" )
 
 target_link_libraries(projetAstro
     ${VTK_LIBRARIES})
