@@ -19,6 +19,7 @@ class Universe {
         Universe(const string &);
 
         void readFromFile(const string &);
+        void write(const string &);
 
 		void gForce(Particule &, int options = 0);
         void gForces(int options = 0);

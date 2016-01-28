@@ -11,6 +11,15 @@ Universe::Universe(const string & filename) : Particules() {
     gForces();
 }
 
+void Universe::write(const string & filename) {
+    ofstream file(filename.c_str());
+    for(int i=0; i<Particules.size(); i++) {
+        file << Particules[i].m << " " << Particules[i].r[0] << " " << Particules[i].r[1] << " " << Particules[i].r[2] << " "
+                                << " " << Particules[i].v[0] << " " << Particules[i].v[1] << " " << Particules[i].v[2] << std::endl;
+    }
+    file.close();
+}
+
 void Universe::readFromFile(const string & filename) {
     ifstream file(filename.c_str());
     string line;
