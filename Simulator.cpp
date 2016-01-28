@@ -17,17 +17,13 @@ Simulator::Simulator(const std::string &input, const std::string &params,
         const std::string &out, const std::string &outMovie, bool rt) {
     parameters = new Parameter(params);
     this->input = input;
-		if (parameters->init == "file") 
-				universe = new Universe(input);
-		else if (parameters->init == "random") {
-				double *bounds = (double*)malloc(6*sizeof(double));
-				for (int i=0; i<3; i++) {
-						bounds[2*i] = -10.0;
-						bounds[2*i+1] = 10.0;
-				}
-				universe = new Universe(initRandom(parameters->Np, parameters->m, bounds));
-		}
-		if(parameters->scheme == "Euler")
+	if (parameters->init == NULL) {
+	    universe = new Universe(input);
+    }
+	else {
+        universe = new Universe(parameters->init->getInit());
+        }
+	if(parameters->scheme == "Euler")
         scheme = new Euler;
     else if(parameters->scheme == "Leapfrog")
         scheme = new Leapfrog;
