@@ -12,7 +12,8 @@ class Particule {
 
         void genId();
 	public:
-        Particule(const real &mass = 0.0, const Vector<DIM> &pos = Vector<DIM>(), const Vector<DIM> &spd = Vector<DIM>());
+        Particule(const real &mass = 0.0, const Vector<DIM> &pos =
+        Vector<DIM>(), const Vector<DIM> &spd = Vector<DIM>(), const real & rad = -1.0);
 		
 		real kineticEnergy() const;
 
@@ -21,7 +22,10 @@ class Particule {
 		Vector<DIM> v;	// Velocity of the particule
 		Vector<DIM> f;	// Force felt by the particle
 		Vector<DIM> fnext; // Force felt by the particle at time (n+1) -> useful for Leapfrog scheme
+        real radius;    // Radius of the particule (usefull for smoothingLength)
         int id() const;
+
+        static real defaultRadius;
 };
 
 #endif

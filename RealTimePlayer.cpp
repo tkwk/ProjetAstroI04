@@ -18,14 +18,18 @@ void vtkTimerCallback::Execute(vtkObject *vtkNotUsed(caller), unsigned long even
  
 //implementation de RealTimePlayer
 
-RealTimePlayer::RealTimePlayer(double * shmem, int nb) : shm(shmem), nbParticules(nb) {
+RealTimePlayer::RealTimePlayer(double * shmem, int nb, const std::vector<double>&sis) : shm(shmem), nbParticules(nb) {
+    for(int i=0;i<nb;i++)
+        sizes.push_back(0.1);
+    for(int i=0;i<sis.size();i++)
+        sizes[i]=sis[i];
     vtkRenderWindow * window = vtkRenderWindow::New();
     vtkSphereSource ** spheres = new vtkSphereSource*[nbParticules];
     vtkRenderer * renderer = vtkRenderer::New();
     for(int i=0; i<nbParticules;i++) {
         spheres[i] = vtkSphereSource::New();
         spheres[i]->SetCenter(0.0, 0.0, 0.0 );
-        spheres[i]->SetRadius(0.1);
+        spheres[i]->SetRadius(sizes[i]);
 				// Spheres appear smoother
 				spheres[i]->SetPhiResolution(18);
 				spheres[i]->SetThetaResolution(36);

@@ -47,6 +47,7 @@ class RealTimePlayer {
     private:
         double * shm;
         int nbParticules;
+        std::vector<double> sizes;
 
         vtkRenderWindow * window;
         vtkSphereSource ** spheres;
@@ -57,7 +58,7 @@ class RealTimePlayer {
         vtkRenderWindowInteractor * interactor;
         vtkTimerCallback * cb;
     public:
-        RealTimePlayer(double *, int);
+        RealTimePlayer(double *shmem, int nb, const std::vector<double> &sizes = std::vector<double>(0));
         ~RealTimePlayer();
 };
 

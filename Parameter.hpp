@@ -36,6 +36,11 @@ struct Parameter {
         stringstream sss(right);
         sss >> scheme;
       }
+      else if(left=="default_radius") {
+        stringstream sss(right);
+        sss >> default_radius;
+        Particule::defaultRadius = default_radius;
+      }
       else if(left=="init") {
         stringstream sss(right);
         std::string type;
@@ -81,6 +86,7 @@ struct Parameter {
   }
   double dt;
   double T;
+  real default_radius;
   std::string scheme;
   Init * init;
 };

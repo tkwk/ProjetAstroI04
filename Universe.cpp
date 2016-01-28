@@ -15,7 +15,8 @@ void Universe::write(const string & filename) {
     ofstream file(filename.c_str());
     for(int i=0; i<Particules.size(); i++) {
         file << Particules[i].m << " " << Particules[i].r[0] << " " << Particules[i].r[1] << " " << Particules[i].r[2] << " "
-                                << " " << Particules[i].v[0] << " " << Particules[i].v[1] << " " << Particules[i].v[2] << std::endl;
+                                << " " << Particules[i].v[0] << " " << Particules[i].v[1] << " " << Particules[i].v[2]
+                                << " " << Particules[i].radius << std::endl;
     }
     file.close();
 }
@@ -26,8 +27,15 @@ void Universe::readFromFile(const string & filename) {
     Particules.resize(0);
     while(getline(file,line)) {
         stringstream ss(line);
-        real m, x, y, z, vx, vy, vz;
+        real m, x, y, z, vx, vy, vz, radius;
+        radius = -1.0;
         ss >> m >> x >> y >> z >> vx >> vy >> vz;
+        std::string findeligne;
+        getline(ss,findeligne);
+        if(findeligne!="") {
+            std::stringstream sss(findeligne);
+            sss >> radius;
+        }
         Vector<DIM> pos, spd;
         pos[0] = x;
         pos[1] = y;
@@ -35,7 +43,7 @@ void Universe::readFromFile(const string & filename) {
         spd[0] = vx;
         spd[1] = vy;
         spd[2] = vz;
-        Particules.push_back(Particule(m,pos,spd));
+        Particules.push_back(Particule(m,pos,spd,radius));
     }
     file.close();
 }
@@ -46,15 +54,19 @@ void Universe::gForce(Particule & p, int options) {
 	if (options == SCHEME_EULER) {
 		p.f = Vector<DIM>(); 	
 		for (int id=0; id<Np; id++) {
-			if (p.id() != Particules[id].id()) 
-                	p.f = p.f + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();	
+			if (p.id() != Particules[id].id()) {
+                real smoothingLength = 0.5*0.69*(p.radius + Particules[id].radius);
+                p.f = p.f + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/((Particules[id].r - p.r).squaredNorm()+(smoothingLength)*(smoothingLength));
+            }
 		}
 	}
 	else if (options == SCHEME_LEAPFROG) {
 		p.fnext = Vector<DIM>();
 		for (int id=0; id<Np; id++) {
-			if (p.id() != Particules[id].id())
-				p.fnext = p.fnext + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/(Particules[id].r - p.r).squaredNorm();
+			if (p.id() != Particules[id].id()) {
+                real smoothingLength = 0.5*0.69*(p.radius + Particules[id].radius);
+				p.fnext = p.fnext + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/((Particules[id].r - p.r).squaredNorm() + (smoothingLength)*(smoothingLength));
+            }
 		}
 	}
 

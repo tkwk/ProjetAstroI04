@@ -1,9 +1,14 @@
 #include "Particule.hpp"
 
 int Particule::nid_ = 0;
+real Particule::defaultRadius = 0.0;
 // Constructors are declared here :
 
-Particule::Particule(const real & mass, const Vector<DIM> &pos, const Vector<DIM> &spd) : m(mass), r(pos), v(spd) {genId();}
+Particule::Particule(const real & mass, const Vector<DIM> &pos, const
+Vector<DIM> &spd, const real & rad) : m(mass), r(pos), v(spd), radius(rad) {
+    genId();
+    if(rad<0.0) radius = Particule::defaultRadius;
+}
 
 // Kinetic and Potential energy are calculated here :
 real Particule::kineticEnergy() const {
