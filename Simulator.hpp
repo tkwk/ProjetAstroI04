@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/shm.h>
+#include <sys/ioctl.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <iostream>
@@ -31,6 +32,10 @@ class Simulator {
         std::string output;
         std::string outputMovie;
         bool realTime;
+
+        std::string input;
+        int refreshFreq;
+        int movieNbPoints;
 };
 
 #endif

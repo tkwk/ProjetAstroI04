@@ -14,8 +14,11 @@ void Simulator::handleInterruptions() {
 
 Simulator::Simulator(const std::string &input, const std::string &params,
         const std::string &out, const std::string &outMovie, bool rt) {
+    refreshFreq = 1000;
+    movieNbPoints = 10000;
     parameters = new Parameter(params);
     universe = new Universe(input);
+    this->input = input;
     if(parameters->scheme == "Euler")
         scheme = new Euler;
     else if(parameters->scheme == "Leapfrog")
@@ -72,9 +75,17 @@ void Simulator::start() {
         int it=0;
         int nbit=parameters->T/parameters->dt;
 
+        //verbose
+        cout << "Initial confitions file: " << input << std::endl;
+        cout << "Number of particules: " << nbParticules << std::endl;
+        cout << "Scheme: " << parameters->scheme;
+        cout << "Time:   " << "dt=" << parameters->dt << "   Tmax=" << parameters->T << std::endl;
+        cout << std::endl;
+        cout << "Starting computation" << std::endl << std::endl;
+
         while(time < parameters->T) {
             //ecrire dans le fichier si necessaire
-            if(movie && nbit > 11000 && (it%(nbit/10000)==0)) {
+            if(movie && nbit > movieNbPoints && (it%(nbit/movieNbPoints)==0)) {
                 (*mfile) << time;
                 for(int i=0;i<nbParticules;i++)
                     for(int j=0;j<3;j++)
@@ -82,24 +93,39 @@ void Simulator::start() {
                 (*mfile) << std::endl;
             }
             //ecrire dans la memoire partagee si necessaire
-            if(pid != -1 && ((it%1000)==0)) {
+            if(pid != -1 && ((it%refreshFreq)==0)) {
                 for(int i=0;i<nbParticules;i++)
                     for(int j=0;j<3;j++)
                         shm[3*i+j] = universe->particules()[i].r[j];
             }
-            if((it%1000)==0 && Simulator::interrupted)
-                break;
+            if((it%refreshFreq)==0) {
+                //affichage du pourcentage
+                int col;
+                struct winsize ws;
+                ioctl(0, TIOCGWINSZ, &ws);
+                col = 0.75*ws.ws_col;
+                std::cout << "\r" << "[";
+                int k;
+                for(k=0;k<(col*it)/nbit;k++)
+                    std::cout << "#";
+                for(;k<col;k++)
+                    std::cout << " ";
+                std::cout << "]" << std::flush;
+                if(Simulator::interrupted)
+                    break;
+            }
             it++;
             time+=parameters->dt;
             //iteration du schema
             scheme->universeStep(*universe);
         }
 
+        std::cout << std::endl << std::endl;
         if(Simulator::interrupted) {
-            std::cout << "Computation interrupted" << std::endl;
+            std::cout << "Computation interrupted" << std::endl << std::endl;
         }
         else
-            std::cout << "Computation finished" << std::endl;
+            std::cout << "Computation finished" << std::endl << std::endl;
         
         if(movie) {
             mfile->close();
@@ -112,10 +138,10 @@ void Simulator::start() {
         if(pid != -1) {
             cout << "Waiting for graphical interface to be closed (press 'q' in the graphical window) ..." << endl;
             wait(NULL);
-            cout << "Done" << endl;
             shmdt(shm);
             shmctl(shmid,IPC_RMID,NULL);
         }
+        std::cout << "Done" << std::endl << std::endl;
     }
 
 }
