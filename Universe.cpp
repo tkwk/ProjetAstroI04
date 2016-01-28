@@ -34,7 +34,7 @@ void Universe::readFromFile(const string & filename) {
         pos[2] = z;
         spd[0] = vx;
         spd[1] = vy;
-        pos[2] = vz;
+        spd[2] = vz;
         Particules.push_back(Particule(m,pos,spd));
     }
     file.close();
