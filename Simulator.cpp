@@ -34,6 +34,13 @@ Simulator::Simulator(const std::string &input, const std::string &params,
             cerr << "Unknown scheme: " << parameters->scheme << endl;
         exit(0);
     }
+    if(parameters->infinite)
+        scheme->infinite = true;
+    else {
+        scheme->infinite = false;
+        for(int i=0;i<6;i++) 
+            (scheme->bounds)[i] = parameters->box[i];
+    }
     scheme->dt = parameters->dt;
     output = out;
     outputMovie = outMovie;

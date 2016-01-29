@@ -7,6 +7,8 @@ class Scheme {
 	protected:
 	public:
 		double dt;
+        bool infinite;
+        double bounds[16];
 		virtual void timeStep(Particule &) const {}
         virtual void universeStep(Universe & u) {
             u.gForces();
