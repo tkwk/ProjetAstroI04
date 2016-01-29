@@ -11,6 +11,8 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkCommand.h>
+#include <vtkCubeSource.h>
+#include <vtkProperty.h>
 
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>

@@ -46,6 +46,18 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb, const std::vector<double>
         renderer->AddActor(actors[i]);
     }
 
+		// Add actor to display domain box
+		vtkCubeSource * domainBox = vtkCubeSource::New();
+		vtkPolyDataMapper * mapperBox = vtkPolyDataMapper::New();
+		vtkActor * actorBox = vtkActor::New();
+		
+		domainBox->SetBounds(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0);
+		mapperBox->SetInputConnection(domainBox->GetOutputPort());
+		actorBox->SetMapper(mapperBox);
+		actorBox->GetProperty()->SetRepresentationToWireframe();
+		actorBox->GetProperty()->SetColor(0.5, 0.0, 0.0);
+		renderer->AddActor(actorBox);
+		
     CustomInteractor * camera = CustomInteractor::New();
     camera->window=window;
 
