@@ -65,7 +65,10 @@ void Simulator::start() {
         std::vector<double> sizes;
         for(int i=0;i<nbParticules;i++)
             sizes.push_back(universe->particules()[i].radius);
-        RealTimePlayer(shm,nbParticules,sizes);
+        double * box = NULL;
+        if(!parameters->infinite)
+            box=parameters->box;
+        RealTimePlayer(shm,nbParticules,box,sizes);
 
         shmdt(shm);
         shmid=-1;

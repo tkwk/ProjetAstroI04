@@ -18,7 +18,7 @@ void vtkTimerCallback::Execute(vtkObject *vtkNotUsed(caller), unsigned long even
  
 //implementation de RealTimePlayer
 
-RealTimePlayer::RealTimePlayer(double * shmem, int nb, const std::vector<double>&sis) : shm(shmem), nbParticules(nb) {
+RealTimePlayer::RealTimePlayer(double * shmem, int nb, double * bounds, const std::vector<double>&sis) : shm(shmem), nbParticules(nb) {
     for(int i=0;i<nb;i++)
         sizes.push_back(0.1);
     for(int i=0;i<sis.size();i++)
@@ -47,17 +47,18 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb, const std::vector<double>
     }
 
 		// Add actor to display domain box
+    if(bounds!=NULL) {
 		vtkCubeSource * domainBox = vtkCubeSource::New();
 		vtkPolyDataMapper * mapperBox = vtkPolyDataMapper::New();
 		vtkActor * actorBox = vtkActor::New();
 		
-		domainBox->SetBounds(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0);
+		domainBox->SetBounds(bounds[0], bounds[1], bounds[2], bounds[3], bounds[4], bounds[5]);
 		mapperBox->SetInputConnection(domainBox->GetOutputPort());
 		actorBox->SetMapper(mapperBox);
 		actorBox->GetProperty()->SetRepresentationToWireframe();
 		actorBox->GetProperty()->SetColor(0.5, 0.0, 0.0);
 		renderer->AddActor(actorBox);
-		
+	}
     CustomInteractor * camera = CustomInteractor::New();
     camera->window=window;
 

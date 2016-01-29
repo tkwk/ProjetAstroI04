@@ -60,7 +60,7 @@ class RealTimePlayer {
         vtkRenderWindowInteractor * interactor;
         vtkTimerCallback * cb;
     public:
-        RealTimePlayer(double *shmem, int nb, const std::vector<double> &sizes = std::vector<double>(0));
+        RealTimePlayer(double *shmem, int nb, double * bounds = NULL, const std::vector<double> &sizes = std::vector<double>(0));
         ~RealTimePlayer();
 };
 

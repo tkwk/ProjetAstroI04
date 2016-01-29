@@ -17,6 +17,7 @@ struct Parameter {
       delete init;
   }
   void readFromFile(const std::string &filename) {
+    infinite = true;
     ifstream file(filename.c_str());
     std::string line;
     while(getline(file,line)) {
@@ -31,6 +32,19 @@ struct Parameter {
       else if(left=="T") {
         stringstream sss(right);
         sss >> T;
+      }
+      else if(left=="box") {
+          stringstream sss(right);
+          infinite = false;
+          for(int j=0;j<3;j++) {
+             std::string dimstring;
+             getline(sss,dimstring,'x');
+             double dim;
+             std::stringstream sts(dimstring);
+             sts >> dim;
+             box[2*j] = -dim/2;
+             box[2*j+1] = dim/2;
+          }
       }
       else if(left=="scheme") {
         stringstream sss(right);
@@ -104,6 +118,8 @@ struct Parameter {
   }
   double dt;
   double T;
+  bool infinite;
+  double box[6];
   real default_radius;
   std::string scheme;
   Init * init;
