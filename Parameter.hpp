@@ -77,10 +77,28 @@ struct Parameter {
           }
           init = initR;
         }
-        else if (type.data()=="galaxy") {
-          //init = new IGalaxy;
+        else if (type=="galaxy") {
+        	IGalaxy * initG = new IGalaxy;
+					int nbLine = 2;
+					std::string line;
+					for (int l=0; l<nbLine; l++) {
+						getline(file,line);
+						std::stringstream ssssi(line);
+						ssssi >> line;
+						std::stringstream ssss(line);
+						std::string leftt;
+						std::string rightt;
+						getline(ssss,leftt,'=');
+						getline(ssss,rightt,'=');
+						std::stringstream sssss(rightt);
+						if(leftt=="m")
+							sssss >> initG->mass;
+						else if(leftt=="Np")
+							sssss >> initG->nbParticules;
+					}
+      	init = initG;
         }
-      }
+			}
     }
     file.close();
   }
