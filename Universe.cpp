@@ -55,8 +55,14 @@ void Universe::gForce(Particule & p, int options) {
 		p.f = Vector<DIM>(); 	
 		for (int id=0; id<Np; id++) {
 			if (p.id() != Particules[id].id()) {
-                real smoothingLength = 0.5*0.69*(p.radius + Particules[id].radius);
-                p.f = p.f + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/((Particules[id].r - p.r).squaredNorm()+(smoothingLength)*(smoothingLength));
+                //real smoothingLength = 0.5*0.69*(p.radius + Particules[id].radius);
+                Vector<DIM> force = Particules[id].r;
+                force -= p.r;
+                double length = force.norm();
+                force/=length;
+                force*=(p.m*Particules[id].m);
+                force/=((length*length));
+                p.f += force;
             }
 		}
 	}
@@ -64,8 +70,15 @@ void Universe::gForce(Particule & p, int options) {
 		p.fnext = Vector<DIM>();
 		for (int id=0; id<Np; id++) {
 			if (p.id() != Particules[id].id()) {
-                real smoothingLength = 0.5*0.69*(p.radius + Particules[id].radius);
-				p.fnext = p.fnext + (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/((Particules[id].r - p.r).squaredNorm() + (smoothingLength)*(smoothingLength));
+                //real smoothingLength = 0.5*0.69*(p.radius + Particules[id].radius);
+                Vector<DIM> force = Particules[id].r;
+                force -= p.r;
+                double length = force.norm();
+                force/=length;
+                force*=(p.m*Particules[id].m);
+                force/=((length*length));
+                p.fnext += force;
+                //p.fnext += (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/((Particules[id].r - p.r).squaredNorm() + (smoothingLength)*(smoothingLength));
             }
 		}
 	}
@@ -86,7 +99,7 @@ real Universe::potentialEnergy(const Particule & p) const {
 	res = 0.0;
 	for (int id=0; id<Np; id++) {
 		if (idp != id)
-			res += -(p.m * Particules[id].m)/(Particules[id].r - p.r).squaredNorm();
+            res += -(p.m * Particules[id].m)/(Particules[id].r - p.r).squaredNorm();
 	}
 	
 	return res;

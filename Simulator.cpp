@@ -66,7 +66,8 @@ void Simulator::start() {
     if(pid == 0) {
         //afficheur temps réel vtk
         //memoire paratagee
-        shmid = shmget(2016,3*sizeof(double)*nbParticules,0);
+        int tag = 2016;
+        while((shmid = shmget(tag,3*sizeof(double)*nbParticules,0))==-1) tag++;
         shm = (double*)shmat(shmid,0,0);
         
         std::vector<double> sizes;
@@ -83,7 +84,9 @@ void Simulator::start() {
     else {
         if(pid != -1) {
             //memoire paratagee
-            shmid = shmget(2016,3*sizeof(double)*nbParticules,0666 | IPC_CREAT);
+            int tag = 2016;
+            while((shmid = shmget(tag,3*sizeof(double)*nbParticules,0666|IPC_CREAT))==-1) tag++;
+            //shmid = shmget(2016,3*sizeof(double)*nbParticules,0666 | IPC_CREAT);
             shm = (double*)shmat(shmid,0,0);
         }
         //boucle de calcul

@@ -23,6 +23,12 @@ public:
     real operator[](const int &) const;
     real & operator[](const int &);
     Vector<N> & operator=(const Vector<N> &);
+    Vector<N> & operator+=(const Vector<N> &);
+    Vector<N> & operator-=(const Vector<N> &);
+
+    Vector<N> & operator*=(const real &);
+    Vector<N> & operator/=(const real &);
+
     Vector<N> operator+(const Vector<N> &) const;
     Vector<N> operator-(const Vector<N> &) const;
     Vector<N> operator/(const real &) const;
@@ -81,6 +87,33 @@ Vector<N> & Vector<N>::operator=(const Vector<N> & other) {
     return *this;
 }
 
+template<unsigned int N>
+Vector<N> & Vector<N>::operator+=(const Vector<N> & other) {
+    for(int i=0;i<N;i++)
+        (*this)[i] += other[i];
+    return *this;
+}
+
+template<unsigned int N>
+Vector<N> & Vector<N>::operator-=(const Vector<N> & other) {
+    for(int i=0;i<N;i++)
+        (*this)[i] -= other[i];
+    return *this;
+}
+
+template<unsigned int N>
+Vector<N> & Vector<N>::operator*=(const real & other) {
+    for(int i=0;i<N;i++)
+        (*this)[i] *= other;
+    return *this;
+}
+
+template<unsigned int N>
+Vector<N> & Vector<N>::operator/=(const real & other) {
+    for(int i=0;i<N;i++)
+        (*this)[i] /= other;
+    return *this;
+}
 
 template<unsigned int N>
 Vector<N> Vector<N>::operator+(const Vector<N> & other) const {
