@@ -30,6 +30,7 @@ class Universe {
 
         friend class Scheme;
 	friend class Leapfrog;
+	friend class BarnesHut;
 };
 
 #endif

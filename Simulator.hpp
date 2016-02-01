@@ -4,6 +4,7 @@
 #include <string>
 #include "Euler.hpp"
 #include "Leapfrog.hpp"
+#include "BarnesHut.hpp"
 #include "Universe.hpp"
 #include "Parameter.hpp"
 #include "RealTimePlayer.hpp"

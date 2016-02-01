@@ -27,12 +27,21 @@ Simulator::Simulator(const std::string &input, const std::string &params,
         scheme = new Euler;
     else if(parameters->scheme == "Leapfrog")
         scheme = new Leapfrog;
+    else if(parameters->scheme == "BarnesHut")
+        scheme = new BarnesHut;
     else {
         if(parameters->scheme=="")
             cerr << "No scheme specified" << std::endl;
         else
             cerr << "Unknown scheme: " << parameters->scheme << endl;
         exit(0);
+    }
+    if(parameters->infinite)
+        scheme->infinite = true;
+    else {
+        scheme->infinite = false;
+        for(int i=0;i<6;i++) 
+            (scheme->bounds)[i] = parameters->box[i];
     }
     scheme->dt = parameters->dt;
     output = out;
@@ -59,13 +68,17 @@ void Simulator::start() {
     if(pid == 0) {
         //afficheur temps réel vtk
         //memoire paratagee
-        shmid = shmget(2016,3*sizeof(double)*nbParticules,0);
+        int tag = 2016;
+        while((shmid = shmget(tag,3*sizeof(double)*nbParticules,0))==-1) tag++;
         shm = (double*)shmat(shmid,0,0);
         
         std::vector<double> sizes;
         for(int i=0;i<nbParticules;i++)
             sizes.push_back(universe->particules()[i].radius);
-        RealTimePlayer(shm,nbParticules,sizes);
+        double * box = NULL;
+        if(!parameters->infinite)
+            box=parameters->box;
+        RealTimePlayer(shm,nbParticules,box,sizes);
 
         shmdt(shm);
         shmid=-1;
@@ -73,7 +86,9 @@ void Simulator::start() {
     else {
         if(pid != -1) {
             //memoire paratagee
-            shmid = shmget(2016,3*sizeof(double)*nbParticules,0666 | IPC_CREAT);
+            int tag = 2016;
+            while((shmid = shmget(tag,3*sizeof(double)*nbParticules,0666|IPC_CREAT))==-1) tag++;
+            //shmid = shmget(2016,3*sizeof(double)*nbParticules,0666 | IPC_CREAT);
             shm = (double*)shmat(shmid,0,0);
         }
         //boucle de calcul

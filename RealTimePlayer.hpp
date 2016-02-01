@@ -11,6 +11,8 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkCommand.h>
+#include <vtkCubeSource.h>
+#include <vtkProperty.h>
 
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>
@@ -58,7 +60,7 @@ class RealTimePlayer {
         vtkRenderWindowInteractor * interactor;
         vtkTimerCallback * cb;
     public:
-        RealTimePlayer(double *shmem, int nb, const std::vector<double> &sizes = std::vector<double>(0));
+        RealTimePlayer(double *shmem, int nb, double * bounds = NULL, const std::vector<double> &sizes = std::vector<double>(0));
         ~RealTimePlayer();
 };
 
