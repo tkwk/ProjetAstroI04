@@ -1,5 +1,5 @@
 dt=0.000008
-T=200.0
+T=40.0
 scheme=Leapfrog
 default_radius=0.05
 box=5x2.5x1
