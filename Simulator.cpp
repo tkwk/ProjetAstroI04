@@ -27,6 +27,8 @@ Simulator::Simulator(const std::string &input, const std::string &params,
         scheme = new Euler;
     else if(parameters->scheme == "Leapfrog")
         scheme = new Leapfrog;
+    else if(parameters->scheme == "BarnesHut")
+        scheme = new BarnesHut;
     else {
         if(parameters->scheme=="")
             cerr << "No scheme specified" << std::endl;

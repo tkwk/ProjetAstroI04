@@ -41,6 +41,8 @@ public:
     real squaredNorm() const;
     real norm() const;
 
+    bool isInside(double *) const;
+
     Vector<N> normalized() const;
     Vector<N> & normalize();
 };
@@ -67,6 +69,14 @@ Vector<N>::Vector(const std::vector<real> & other) : coordinates(N) {
 template<unsigned int N>
 Vector<N>::~Vector() {}
 
+template<unsigned int N>
+bool Vector<N>::isInside(double * bounds) const {
+    for(int i=0;i<N;i++) {
+        if(coordinates[i] <= bounds[2*i] || coordinates[i] > bounds[2*i+1])
+            return false;
+    }
+    return true;
+}
 
 template<unsigned int N>
 real Vector<N>::operator[](const int & index) const {

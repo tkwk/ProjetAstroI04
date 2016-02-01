@@ -2,6 +2,7 @@
 #include <cmath>
 #include <fstream>
 #include <sstream>
+#include "Initialize.hpp"
 
 
 Universe::Universe(const vector<Particule> &parts) : Particules(parts) {gForces();}
@@ -22,30 +23,9 @@ void Universe::write(const string & filename) {
 }
 
 void Universe::readFromFile(const string & filename) {
-    ifstream file(filename.c_str());
-    string line;
-    Particules.resize(0);
-    while(getline(file,line)) {
-        stringstream ss(line);
-        real m, x, y, z, vx, vy, vz, radius;
-        radius = -1.0;
-        ss >> m >> x >> y >> z >> vx >> vy >> vz;
-        std::string findeligne;
-        getline(ss,findeligne);
-        if(findeligne!="") {
-            std::stringstream sss(findeligne);
-            sss >> radius;
-        }
-        Vector<DIM> pos, spd;
-        pos[0] = x;
-        pos[1] = y;
-        pos[2] = z;
-        spd[0] = vx;
-        spd[1] = vy;
-        spd[2] = vz;
-        Particules.push_back(Particule(m,pos,spd,radius));
-    }
-    file.close();
+    IFile ifile;
+    ifile.fileName = filename;
+    Particules = ifile.getInit();
 }
 
 void Universe::gForce(Particule & p, int options) {

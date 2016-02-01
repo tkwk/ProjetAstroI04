@@ -6,11 +6,45 @@
 #include "Particule.hpp"
 #include <stdlib.h>
 #include <time.h>
+#include <fstream>
 
 #define CONST_PI		3.14159265359
 
 struct Init {
   virtual std::vector<Particule> getInit() = 0;
+};
+
+struct IFile : public Init {
+  std::string fileName;
+
+  virtual std::vector<Particule> getInit() {
+    std::vector<Particule> Particules;
+    ifstream file(fileName.c_str());
+    std::string line;
+    Particules.resize(0);
+    while(getline(file,line)) {
+        stringstream ss(line);
+        real m, x, y, z, vx, vy, vz, radius;
+        radius = -1.0;
+        ss >> m >> x >> y >> z >> vx >> vy >> vz;
+        std::string findeligne;
+        getline(ss,findeligne);
+        if(findeligne!="") {
+            std::stringstream sss(findeligne);
+            sss >> radius;
+        }
+        Vector<DIM> pos, spd;
+        pos[0] = x;
+        pos[1] = y;
+        pos[2] = z;
+        spd[0] = vx;
+        spd[1] = vy;
+        spd[2] = vz;
+        Particules.push_back(Particule(m,pos,spd,radius));
+    }
+    file.close();
+    return Particules;
+  }
 };
 
 struct IRandom : public Init {

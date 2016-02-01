@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include "Initialize.hpp"
+#include "Octree.hpp"
 
 struct Parameter {
   Parameter(const std::string &file) {
@@ -49,6 +50,10 @@ struct Parameter {
       else if(left=="scheme") {
         stringstream sss(right);
         sss >> scheme;
+      }
+      else if(left=="theta") {
+        stringstream sss(right);
+        sss >> Octree::theta;
       }
       else if(left=="default_radius") {
         stringstream sss(right);
@@ -111,6 +116,11 @@ struct Parameter {
 							sssss >> initG->nbParticules;
 					}
       	init = initG;
+        }
+        else { //l'utilisateur a specifie un nom de fichier
+            IFile * initF = new IFile;
+            initF->fileName = type;
+            init = initF;
         }
 			}
     }
