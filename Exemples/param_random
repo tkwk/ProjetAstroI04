@@ -1,0 +1,10 @@
+dt=0.00008
+T=0.4
+scheme=Euler
+epsilon=0.002
+default_radius=0.025
+box=4x4x4
+init=random
+	Np=150
+	m=1.0
+	box=1x1x1
