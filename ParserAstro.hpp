@@ -13,10 +13,14 @@ std::vector<std::string> list() {
     list_.push_back("i");
     list_.push_back("p");
     list_.push_back("m");
+    list_.push_back("vm");
+    list_.push_back("vs");
     return list_;
 }
 std::vector<int> size() {
     std::vector<int> size_;
+    size_.push_back(1);
+    size_.push_back(1);
     size_.push_back(1);
     size_.push_back(1);
     size_.push_back(1);
@@ -30,6 +34,8 @@ std::vector<bool> optional() {
     optional_.push_back(true);
     optional_.push_back(false);
     optional_.push_back(true);
+    optional_.push_back(true);
+    optional_.push_back(true);
     return optional_;
 }
 
@@ -39,6 +45,8 @@ std::vector <std::string> description() {
     description_.push_back("<input file>: specifie le fichier de conditions initiales");
     description_.push_back("<input file>: specifie le fichier de parametres");
     description_.push_back("<input file>: specifie le fichier ou enregistrer les positions des particules");
+    description_.push_back("<input file>: specifie un fichier temporel a visualiser");
+    description_.push_back("<input file>: specifie un fichier de conditions initiales a visualiser");
     return description_;
 }
 
