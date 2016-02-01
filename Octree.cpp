@@ -56,7 +56,7 @@ void Octree::force(Particule *p, Vector<DIM> &forc) const {
         Vector<DIM> vect = pos_;
         vect -= p->r;
         double length = vect.norm();
-        if(D_/length < theta_) {
+        if(D_/length < theta) {
             vect *= p->m * mass_;
             vect /= (length*length*length);
             forc += vect;

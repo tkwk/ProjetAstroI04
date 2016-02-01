@@ -1,3 +1,10 @@
+/*
+    main.cpp
+    
+    Lecture des parametres de ligne de commande (classe ParserAstro)
+    Lancement de la simulation (classe Simulation)
+*/
+
 #include <iostream>
 #include "ParserAstro.hpp"
 #include "Simulator.hpp"
