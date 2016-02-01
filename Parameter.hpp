@@ -2,6 +2,10 @@
 #ifndef __PARAMETER_H__
 #define __PARAMETER_H__
 
+/*
+    Classe permettant la lecture du fichier de parametres
+*/
+
 #include <string>
 #include <fstream>
 #include <sstream>

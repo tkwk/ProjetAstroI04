@@ -2,6 +2,12 @@
 #ifndef __REALTIMEPLAYER_H__
 #define __REALTIMEPLAYER_H__
 
+/*
+    Classe d'affichage:
+    La classe RealTimePlayer affiche toutes les 30 ms les particules dont la
+    positon est stockée dans le buffer shm
+*/
+
 #include <string>
 
 #include <vtkSphereSource.h>
@@ -17,6 +23,7 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkObjectFactory.h>
 
+// Interacteur vtk
 class CustomInteractor : public vtkInteractorStyleTrackballCamera {
 private:
 public:
@@ -30,6 +37,7 @@ public:
     }
 };
 
+// Timer
 class vtkTimerCallback : public vtkCommand
 {
     public:
@@ -45,11 +53,12 @@ class vtkTimerCallback : public vtkCommand
         vtkActor ** actors;
 };
 
+// Classe affichant les shperes
 class RealTimePlayer {
     private:
-        double * shm;
-        int nbParticules;
-        std::vector<double> sizes;
+        double * shm;                   //buffer contenant les positions des particules: il est lu toutes les 30ms
+        int nbParticules;               
+        std::vector<double> sizes;      //tailles d'affichage des particules
 
         vtkRenderWindow * window;
         vtkSphereSource ** spheres;

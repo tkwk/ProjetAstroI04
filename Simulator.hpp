@@ -23,20 +23,22 @@ class Simulator {
         ~Simulator();
         void start();
         
-        static void handleInterruptions();
-        static bool interrupted;
-        static void intHandler(int);
+        static void handleInterruptions();          // Fonction pour gerer l'interruption du calcul par Ctrl-C
     private:
+        static bool interrupted;                    // Items relatifs à la 
+        static void intHandler(int);                // gestion d'interruption
+
         Parameter * parameters;
         Universe * universe;
         Scheme * scheme;
-        std::string output;
-        std::string outputMovie;
-        bool realTime;
 
-        std::string input;
-        int refreshFreq;
-        int movieNbPoints;
+        std::string output;                     // Nom du fichier de sortie (contenant l'etats des particules a le fin du calcul)
+        std::string outputMovie;                // Nom d'un eventuel fichier temporel
+        bool realTime;                          // Visualisation en temps reel du calcul ou non
+        std::string input;                      // Nom d'un eventuel fichier d'entree
+
+        int refreshFreq;                        // Nombre d'iteration avant d'afficher la progression du calcul
+        int movieNbPoints;                      // Nombre de points dans l'eventuel fichier film
 };
 
 #endif

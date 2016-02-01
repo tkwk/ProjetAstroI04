@@ -1,6 +1,10 @@
 #ifndef __VECTOR_HPP__
 #define __VECTOR_HPP__
 
+/*
+    Classe de vecteur de dimension N
+*/
+
 #include <iostream>
 #include "Real.hpp"
 #include <vector>

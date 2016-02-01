@@ -1,14 +1,18 @@
 #ifndef __PARTICULE_HPP__
 #define __PARTICULE_HPP__
 
+/*
+    Definition d'une particule
+*/
+
 #include "Vector.hpp"
 
-const int DIM=3;
+const int DIM=3;            //dimension de l'espace
 
 class Particule {
     private:
-        int id_;
-        static int nid_;;
+        int id_;            //identifiant unique de la particule
+        static int nid_;;   //nombre d'identifiants
 
         void genId();
 	public:

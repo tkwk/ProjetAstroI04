@@ -2,6 +2,13 @@
 #ifndef __INITIALIZE_HPP__
 #define __INITIALIZE_HPP__
 
+/* 
+    Classe concernant les differents initialisations de particules possibles
+
+    Galaxy
+    Random
+    InputFile
+*/
 
 #include "Particule.hpp"
 #include <stdlib.h>
@@ -51,6 +58,7 @@ struct IRandom : public Init {
   int nbParticules;
   double bounds[6];
   double mass;
+  
   virtual std::vector<Particule> getInit () {
     srand(time(NULL));
     std::vector<Particule> res(nbParticules);
