@@ -91,10 +91,10 @@ struct IGalaxy : public Init {
 		double Rgal1, Rgal2;
 		double Mcenter1, Mcenter2;
 		xc1  = -1.5; xc2  = 1.5;
-		vxc1 = 0.1;  vxc2 = -0.3;
+		vxc1 = 0.5;  vxc2 = -0.4;
 		
-		Rgal1 = 1.0; Rgal2 = 0.6;
-		Mcenter1 = 2.e6; Mcenter2 = 1.e6;
+		Rgal1 = 1.0; Rgal2 = 1.0;
+		Mcenter1 = 2.e6; Mcenter2 = 1.5e6;
 
 		// Premiere galaxie
 		Vector<DIM> pos1, pos2;
