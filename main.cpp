@@ -8,6 +8,7 @@
 #include <iostream>
 #include "ParserAstro.hpp"
 #include "Simulator.hpp"
+#include "Visualisation.hpp"
 
 using namespace std;
 
@@ -15,6 +16,13 @@ int main(int argc, char * argv[]) {
     ParserAstro parser(argv);
     if(!parser.check())
         return 0;
+
+    if(parser.isPresent("vs")) {
+        std::string file = parser["vs"][0];
+        StaticVisualisation sv(file);
+        return 0;
+    }
+
     std::string input = "";
     if(parser.isPresent("i"))
         input = parser["i"][0];

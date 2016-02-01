@@ -19,6 +19,9 @@ void vtkTimerCallback::Execute(vtkObject *vtkNotUsed(caller), unsigned long even
 //implementation de RealTimePlayer
 
 RealTimePlayer::RealTimePlayer(double * shmem, int nb, double * bounds, const std::vector<double>&sis) : shm(shmem), nbParticules(nb) {
+    domainBox = NULL;
+    actorBox = NULL;
+    mapperBox = NULL;
     for(int i=0;i<nb;i++)
         sizes.push_back(0.1);
     for(int i=0;i<sis.size();i++)
@@ -96,9 +99,9 @@ RealTimePlayer::~RealTimePlayer() {
     for(int i=0; i<nbParticules;i++) {
         spheres[i]->Delete();
     }
-    domainBox->Delete();
-    mapperBox->Delete();
-    actorBox->Delete();
+    if(domainBox!=NULL) domainBox->Delete();
+    if(mapperBox!=NULL) mapperBox->Delete();
+    if(actorBox!=NULL) actorBox->Delete();
     delete[] spheres;
     interactor->Delete();
     renderer->Delete();
