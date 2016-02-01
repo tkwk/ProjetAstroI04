@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(projetAstro)
 
 #SET( CMAKE_CXX_FLAGS "-pg" )
+#SET( CMAKE_CXX_FLAGS "-g" )
 
 find_package(VTK)
 include_directories(".")
@@ -16,7 +17,9 @@ add_executable(projetAstro
     Particule.cpp
     RealTimePlayer.cpp
     Universe.cpp
-    Simulator.cpp)
+    Simulator.cpp
+    Octree.cpp
+    BarnesHut.cpp)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS}" )
 
