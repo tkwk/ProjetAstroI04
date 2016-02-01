@@ -1,0 +1,6 @@
+dt=0.00001
+T=200.0
+scheme=Leapfrog
+default_radius=0.1
+box=4.5x4.5x1.0
+init=Exemples/init_innerSystemeSolaire
