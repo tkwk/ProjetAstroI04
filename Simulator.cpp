@@ -17,7 +17,7 @@ Simulator::Simulator(const std::string &input, const std::string &params,
         const std::string &out, const std::string &outMovie, bool rt) {
     parameters = new Parameter(params);
     this->input = input;
-	if (parameters->init == NULL) {
+	if (input!="") {
 	    universe = new Universe(input);
     }
 	else {
@@ -44,10 +44,12 @@ Simulator::Simulator(const std::string &input, const std::string &params,
             (scheme->bounds)[i] = parameters->box[i];
     }
     scheme->dt = parameters->dt;
+    universe->epsilon = parameters->epsilon;
     output = out;
     outputMovie = outMovie;
     realTime = rt;
     refreshFreq = 1000/(universe->particules().size());
+    if(refreshFreq<10) refreshFreq=10;
     movieNbPoints = 10000;
 }
 

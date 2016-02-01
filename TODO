@@ -1,6 +1,5 @@
-gestion de espaces dans les lectures de fichiers
-rajouter possibilité
+gestion de espaces dans les lectures de fichiers (=>parser propre)
 Lecteur de film
 Lectuer de fichier input
-Schéma final
-galaxy
+Schéma final->regler la version incrementale + optimiser
+parallelisation

@@ -59,6 +59,9 @@ class RealTimePlayer {
         CustomInteractor * camera;
         vtkRenderWindowInteractor * interactor;
         vtkTimerCallback * cb;
+        vtkCubeSource * domainBox;
+        vtkPolyDataMapper * mapperBox;
+        vtkActor * actorBox;
     public:
         RealTimePlayer(double *shmem, int nb, double * bounds = NULL, const std::vector<double> &sizes = std::vector<double>(0));
         ~RealTimePlayer();

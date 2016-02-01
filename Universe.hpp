@@ -15,6 +15,8 @@ class Universe {
 	private :
 		vector<Particule> Particules;
 	public :
+        double epsilon;
+
         Universe(const vector<Particule> &);
         Universe(const string &);
 

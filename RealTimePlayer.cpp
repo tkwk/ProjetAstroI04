@@ -23,9 +23,9 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb, double * bounds, const st
         sizes.push_back(0.1);
     for(int i=0;i<sis.size();i++)
         sizes[i]=sis[i];
-    vtkRenderWindow * window = vtkRenderWindow::New();
-    vtkSphereSource ** spheres = new vtkSphereSource*[nbParticules];
-    vtkRenderer * renderer = vtkRenderer::New();
+    window = vtkRenderWindow::New();
+    spheres = new vtkSphereSource*[nbParticules];
+    renderer = vtkRenderer::New();
     for(int i=0; i<nbParticules;i++) {
         spheres[i] = vtkSphereSource::New();
         spheres[i]->SetCenter(0.0, 0.0, 0.0 );
@@ -34,12 +34,12 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb, double * bounds, const st
 				spheres[i]->SetPhiResolution(18);
 				spheres[i]->SetThetaResolution(36);
     }
-    vtkPolyDataMapper ** mappers = new vtkPolyDataMapper*[nbParticules];
+    mappers = new vtkPolyDataMapper*[nbParticules];
     for(int i=0;i<nbParticules;i++) {
         mappers[i] = vtkPolyDataMapper::New();
         mappers[i]->SetInputConnection(spheres[i]->GetOutputPort());
     }
-    vtkActor ** actors = new vtkActor*[nbParticules];
+    actors = new vtkActor*[nbParticules];
     for(int i=0;i<nbParticules;i++) {
         actors[i] = vtkActor::New();
         actors[i]->SetMapper(mappers[i]);
@@ -48,9 +48,9 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb, double * bounds, const st
 
 		// Add actor to display domain box
     if(bounds!=NULL) {
-		vtkCubeSource * domainBox = vtkCubeSource::New();
-		vtkPolyDataMapper * mapperBox = vtkPolyDataMapper::New();
-		vtkActor * actorBox = vtkActor::New();
+		domainBox = vtkCubeSource::New();
+		mapperBox = vtkPolyDataMapper::New();
+		actorBox = vtkActor::New();
 		
 		domainBox->SetBounds(bounds[0], bounds[1], bounds[2], bounds[3], bounds[4], bounds[5]);
 		mapperBox->SetInputConnection(domainBox->GetOutputPort());
@@ -64,11 +64,11 @@ RealTimePlayer::RealTimePlayer(double * shmem, int nb, double * bounds, const st
 
 		window->SetSize(720, 720); // Set window size in  pixels   
 
-    vtkRenderWindowInteractor * interactor = vtkRenderWindowInteractor::New();	
+    interactor = vtkRenderWindowInteractor::New();	
 		interactor->SetRenderWindow(window);
     interactor->SetInteractorStyle(camera);
     interactor->Initialize();
-    vtkTimerCallback * cb = vtkTimerCallback::New();
+    cb = vtkTimerCallback::New();
     cb->nb=nbParticules;
     cb->window=window;
     cb->actors=actors;
@@ -96,6 +96,9 @@ RealTimePlayer::~RealTimePlayer() {
     for(int i=0; i<nbParticules;i++) {
         spheres[i]->Delete();
     }
+    domainBox->Delete();
+    mapperBox->Delete();
+    actorBox->Delete();
     delete[] spheres;
     interactor->Delete();
     renderer->Delete();

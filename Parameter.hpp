@@ -55,6 +55,10 @@ struct Parameter {
         stringstream sss(right);
         sss >> Octree::theta;
       }
+      else if(left=="epsilon") {
+        stringstream sss(right);
+        sss >> epsilon;
+      }
       else if(left=="default_radius") {
         stringstream sss(right);
         sss >> default_radius;
@@ -133,6 +137,7 @@ struct Parameter {
   real default_radius;
   std::string scheme;
   Init * init;
+  real epsilon;
 };
 
 #endif

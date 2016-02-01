@@ -41,7 +41,7 @@ void Universe::gForce(Particule & p, int options) {
                 double length = force.norm();
                 force/=length;
                 force*=(p.m*Particules[id].m);
-                force/=((length*length));
+                force/=((length*length)+(epsilon*epsilon));
                 p.f += force;
             }
 		}
@@ -56,7 +56,7 @@ void Universe::gForce(Particule & p, int options) {
                 double length = force.norm();
                 force/=length;
                 force*=(p.m*Particules[id].m);
-                force/=((length*length));
+                force/=((length*length)+(epsilon*epsilon));
                 p.fnext += force;
                 //p.fnext += (p.m * Particules[id].m * (Particules[id].r-p.r).normalized())/((Particules[id].r - p.r).squaredNorm() + (smoothingLength)*(smoothingLength));
             }

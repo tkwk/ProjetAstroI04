@@ -13,7 +13,11 @@ int main(int argc, char * argv[]) {
         input = parser["i"][0];
     std::string parametres = parser["p"][0];
     std::string output = "output";
-    std::string outputMovie = "movie";
+    if(parser.isPresent("o"))
+        output = parser["o"][0];
+    std::string outputMovie = "";
+    if(parser.isPresent("m"))
+        outputMovie = parser["m"][0];
     Simulator simulator(input, parametres, output, outputMovie, true);
     Simulator::handleInterruptions();
     simulator.start();
