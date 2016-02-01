@@ -4,6 +4,7 @@
 
 #include "Particule.hpp"
 #include <vector>
+#include <string>
 
 
 class Octree {
@@ -27,6 +28,7 @@ class Octree {
         bool isLeaf() const;
         void insert(const Particule &);
         void force(const Particule &, Vector<DIM> &) const;
+        std::string toString(std::string indent="") const;
 
         static double theta;
 };

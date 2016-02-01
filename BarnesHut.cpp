@@ -3,10 +3,12 @@
 
 
 void BarnesHut::universeStep(Universe & u) {
-    Octree tree(u.Particules,bounds);
+    Octree * tree = new Octree(u.Particules,bounds);
+    //std::cout << "======================" << std::endl;
+    //std::cout << tree.toString() << std::endl;
     for(int i=0; i<u.Particules.size(); i++) {
         for(int d=0;d<DIM;d++) u.Particules[i].f[d] = 0.0;
-        tree.force(u.Particules[i],u.Particules[i].f);
+        tree->force(u.Particules[i],u.Particules[i].f);
         u.Particules[i].f *= dt;
         u.Particules[i].f /= u.Particules[i].m;
         u.Particules[i].v += u.Particules[i].f;
@@ -23,4 +25,5 @@ void BarnesHut::universeStep(Universe & u) {
             }
         }
     }
+    delete tree;
 }

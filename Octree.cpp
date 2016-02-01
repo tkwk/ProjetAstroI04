@@ -1,5 +1,6 @@
 
 #include "Octree.hpp"
+#include <sstream>
 
 double Octree::theta = 0.0;
 
@@ -22,8 +23,9 @@ Octree::Octree(const std::vector<Particule> &particules, double * bounds) : prev
     double dy = bounds[3] - bounds[2];
     double dz = bounds[5] - bounds[4];
     D_ = min(dx,min(dy,dz));
-    for(int i=1;i<particules.size();i++)
+    for(int i=0;i<particules.size();i++) {
         insert(particules[i]);
+    }
 }
 
 Octree::~Octree() {
@@ -38,7 +40,7 @@ void Octree::force(const Particule &p, Vector<DIM> &forc) const {
                 Vector<DIM> vect = pos_;
                 vect -= p.r;
                 double length = vect.norm();
-                if(length==0.0) return;
+                if(length<=0.0001) return;
                 vect *= p.m * mass_;
                 vect /= (length*length*length);
                 forc += vect;
@@ -48,7 +50,7 @@ void Octree::force(const Particule &p, Vector<DIM> &forc) const {
         Vector<DIM> vect = pos_;
         vect -= p.r;
         double length = vect.norm();
-        if(false && D_/length < theta_) {
+        if(D_/length < theta_) {
             vect *= p.m * mass_;
             vect /= (length*length*length);
             forc += vect;
@@ -63,8 +65,6 @@ void Octree::force(const Particule &p, Vector<DIM> &forc) const {
 void Octree::insert(const Particule &p) {
     if(isLeaf()) {
         if(empty_) {
-            pos_ = p.r;
-            mass_ = p.m;
             empty_ = false;
         }
         else {
@@ -99,8 +99,6 @@ void Octree::insert(const Particule &p) {
     }
     else {
         for(int i=0;i<8;i++) {
-            //pos_ = (p.r + pos_)/2.0;
-            //mass_ = (mass_ + p.m)/2.0;
             if(p.r.isInside(children_[i]->box_)) {
                 children_[i]->insert(p);
                 break;
@@ -115,3 +113,23 @@ bool Octree::isLeaf() const {
     for(int i=0;i<8;i++) if(children_[i]!=NULL) return false;
     return true;
 }
+
+std::string Octree::toString(std::string indent) const {
+    std::stringstream ss("");
+    ss << indent;
+    for(int i=0;i<6;i++)
+        ss << " " << box_[i];
+    ss << std::endl;
+    ss << indent;
+    ss << mass_ << " " << pos_ << std::endl;
+    indent += "          ";
+    for(int i=0;i<8;i++) {
+        if(children_[i] != NULL)
+            ss << children_[i]->toString(indent);
+    }
+    return ss.str();
+}
+
+
+
+
